@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#040507">
+<meta name="description" content="Pesquisa de satisfação da K&M Imports.">
+<title>K&M Imports | Avaliação Premium</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#040507;
+  --bg2:#080b11;
+  --panel:#0b0f15cc;
+  --panel2:#0f141d;
+  --line:#172338;
+  --line2:#21314b;
+  --text:#f6f8fd;
+  --muted:#9aa8be;
+  --blue:#0f2f5b;
+  --blue2:#18467d;
+  --blue3:#2a6cc2;
+  --blueSoft:#90c1ff;
+  --focus:#6ea9ff;
+  --gold:#f6ca63;
+  --ok:#7ac0ff;
+  --shadow:0 20px 80px rgba(0,0,0,.55);
+  --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100dvh;
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse 70% 35% at 50% 0%, rgba(33,84,160,.26), transparent 55%),
+    radial-gradient(circle at 15% 20%, rgba(17,48,95,.28), transparent 20%),
+    radial-gradient(circle at 85% 25%, rgba(19,64,126,.23), transparent 18%),
+    linear-gradient(180deg, #06080d 0%, #030406 100%);
+  -webkit-font-smoothing:antialiased;
+}
+body::before,
+body::after{
+  content:"";position:fixed;pointer-events:none;z-index:-1;filter:blur(50px)
+}
+body::before{width:260px;height:260px;left:-70px;top:120px;background:rgba(27,76,145,.18);border-radius:50%}
+body::after{width:300px;height:300px;right:-120px;top:40px;background:rgba(39,107,202,.14);border-radius:50%}
+.container{width:min(100% - 28px, 720px);margin:auto;padding:20px 0 calc(48px + env(safe-area-inset-bottom))}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}
+.badge-top{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #203354;background:rgba(10,16,27,.86);border-radius:999px;color:#b8d8ff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;box-shadow:inset 0 1px rgba(255,255,255,.06)}
+.badge-top i{width:7px;height:7px;border-radius:50%;background:#4aa2ff;box-shadow:0 0 12px #4aa2ff}
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(39,76,134,.55);
+  border-radius:30px;
+  background:
+    linear-gradient(145deg, rgba(18,26,39,.92), rgba(7,10,15,.96) 58%),
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  box-shadow:var(--shadow), inset 0 1px rgba(255,255,255,.05), inset 0 -1px rgba(255,255,255,.02);
+  padding:24px;
+  margin-bottom:18px;
+}
+.hero::before{
+  content:"";position:absolute;inset:auto -60px -90px auto;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle at center, rgba(45,110,201,.23), transparent 68%);
+}
+.hero::after{
+  content:"";position:absolute;left:-70px;top:-70px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle at center, rgba(18,58,118,.22), transparent 65%);
+}
+.brand{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+.logo-wrap{position:relative;flex:none}
+.logo-glow{position:absolute;inset:-10px;background:radial-gradient(circle at center, rgba(60,138,255,.22), transparent 65%);filter:blur(10px)}
+.logo{
+  position:relative;
+  width:82px;height:82px;border-radius:24px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 30%, rgba(255,255,255,.01) 31%),
+    linear-gradient(145deg, #0f1724, #06090f 70%);
+  border:1px solid rgba(72,124,196,.58);
+  box-shadow:inset 0 1px rgba(255,255,255,.10), inset 0 -10px 24px rgba(0,0,0,.26), 0 18px 30px rgba(0,0,0,.38);
+  display:grid;place-items:center;overflow:hidden;
+}
+.logo::before{
+  content:"";position:absolute;inset:0;background:
+    linear-gradient(135deg, rgba(88,170,255,.18), transparent 36%),
+    linear-gradient(315deg, rgba(40,96,173,.18), transparent 40%);
+}
+.logo::after{
+  content:"";position:absolute;left:10px;right:10px;top:10px;height:16px;border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,0));
+}
+.logo-mark{position:relative;text-align:center;line-height:1}
+.logo-mark b{display:block;font-size:24px;letter-spacing:-.08em;font-weight:900;color:#fff;text-shadow:0 2px 12px rgba(58,125,214,.25)}
+.logo-mark b span{color:#6fb1ff}
+.logo-mark small{display:block;margin-top:6px;font-size:8px;letter-spacing:.34em;color:#95bdf3;font-weight:800}
+.brand-copy small{display:block;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#84bbff;font-weight:800;margin-bottom:6px}
+.brand-copy h1{margin:0;font-size:clamp(28px,8vw,46px);line-height:1.02;letter-spacing:-.065em;font-weight:850}
+.brand-copy h1 span{color:#7eb7ff}
+.brand-copy p{margin:10px 0 0;color:#b3c0d4;max-width:470px;font-size:14px;line-height:1.65}
+.meta-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 2px 10px;color:#a6b1c4;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.progress{height:5px;border-radius:999px;background:#101722;border:1px solid #182334;overflow:hidden;box-shadow:inset 0 1px rgba(255,255,255,.04)}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg, #16345f, #2e75d0 55%, #7bb9ff);border-radius:999px;transition:width .28s ease}
+.panel{margin-top:14px;border:1px solid rgba(34,56,92,.72);border-radius:28px;background:linear-gradient(180deg, rgba(12,17,26,.94), rgba(8,11,17,.96));box-shadow:var(--shadow), inset 0 1px rgba(255,255,255,.05);overflow:hidden}
+.panel-body{padding:24px}
+.panel-head{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid #152133;margin-bottom:20px}
+.panel-icon{width:46px;height:46px;border-radius:16px;border:1px solid #1f3560;background:linear-gradient(180deg, #11203a, #0b121e);display:grid;place-items:center;color:#99c7ff;font-size:20px;box-shadow:inset 0 1px rgba(255,255,255,.06)}
+.panel-head h2{margin:0;font-size:18px;letter-spacing:-.03em}
+.panel-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.field{margin:0 0 24px}
+fieldset{border:0;padding:0;min-width:0}
+label.main,legend{display:block;margin:0 0 7px;padding:0;font-size:14px;font-weight:760;color:#f4f7fd}
+.hint{margin:0 0 12px;font-size:12px;color:var(--muted);line-height:1.55}
+.input, textarea{
+  width:100%;background:linear-gradient(180deg, #06080d, #0b1017);color:#fff;
+  border:1px solid #243247;border-radius:15px;padding:14px 15px;font:inherit;outline:none;
+  box-shadow:inset 0 1px rgba(255,255,255,.04)
+}
+.input::placeholder,textarea::placeholder{color:#738196}
+.input:focus,textarea:focus{border-color:#376fbc;box-shadow:0 0 0 3px rgba(72,138,236,.18)}
+textarea{min-height:110px;resize:vertical}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.choice-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.choice{
+  position:relative;display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:52px;padding:11px 10px;border-radius:15px;border:1px solid #223146;
+  background:linear-gradient(180deg,#0a0f16,#101724);cursor:pointer;font-weight:650;color:#d8e6fb;
+  transition:transform .12s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease;
+  box-shadow:inset 0 1px rgba(255,255,255,.03)
+}
+.choice:hover{transform:translateY(-1px);border-color:#335684}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice:has(input:checked){background:linear-gradient(180deg, #10294b, #15396a);border-color:#4d8fe6;box-shadow:0 0 0 2px rgba(85,151,241,.14), inset 0 1px rgba(255,255,255,.06)}
+.choice:has(input:focus-visible){outline:2px solid #8ec0ff;outline-offset:2px}
+.stars-wrap{padding:12px 14px 14px;border:1px solid #1c2a3f;border-radius:18px;background:linear-gradient(180deg, rgba(13,17,25,.9), rgba(9,13,20,.96))}
+.stars{display:flex;justify-content:center;gap:8px;flex-direction:row-reverse}
+.stars input{position:absolute;opacity:0}
+.stars label{font-size:42px;line-height:1;color:#4d5a6f;cursor:pointer;transition:transform .12s ease,color .14s ease,text-shadow .14s ease}
+.stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--gold);text-shadow:0 0 18px rgba(246,202,99,.25)}
+.stars label:active{transform:scale(.97)}
+.stars input:focus-visible + label{outline:2px solid white;border-radius:6px}
+.rating-text{text-align:center;margin-top:10px;font-size:12px;color:#a8b6ca;min-height:18px}
+.submit{
+  width:100%;border:0;border-radius:17px;padding:16px 18px;color:#fff;font-size:15px;font-weight:800;cursor:pointer;
+  background:linear-gradient(90deg, #14335c, #215ca8 55%, #2b78d8);
+  box-shadow:0 16px 32px rgba(22,64,128,.32), inset 0 1px rgba(255,255,255,.18);
+  transition:transform .13s ease,filter .18s ease
+}
+.submit:hover{filter:brightness(1.08)}
+.submit:active{transform:translateY(1px)}
+.note{margin:14px 0 0;color:#91a1ba;font-size:12px;text-align:center;line-height:1.6}
+.note strong{color:#dbe7f8}
+.info-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.info-box{padding:12px;border-radius:16px;border:1px solid #16233a;background:linear-gradient(180deg,#090d14,#0d131c);text-align:center}
+.info-box b{display:block;font-size:15px;margin-bottom:2px;color:#dfe8f7}
+.info-box small{color:#8f9db2;font-size:11px}
+.thanks{display:none;text-align:center;padding:12px 0 4px}
+.thanks-badge{width:74px;height:74px;border-radius:22px;margin:4px auto 14px;display:grid;place-items:center;background:linear-gradient(180deg,#10294b,#0b1524);border:1px solid #2c5fa3;color:#8ec0ff;font-size:30px;box-shadow:0 16px 36px rgba(12,43,83,.35)}
+.thanks h2{margin:0 0 10px;font-size:28px;letter-spacing:-.05em}
+.thanks p{margin:0 auto 18px;color:#acb9cd;line-height:1.7;max-width:470px}
+.actions{display:grid;gap:10px}
+.ghost-btn{width:100%;border-radius:15px;padding:14px 16px;border:1px solid #2a4369;background:linear-gradient(180deg,#0c1320,#0a0f17);color:#dbe8fb;font-weight:700;cursor:pointer}
+.footer{text-align:center;color:#728299;font-size:12px;margin:18px 0 0;line-height:1.6}
+@media (max-width:620px){
+  .brand{align-items:flex-start;flex-direction:column}
+  .topbar{flex-wrap:wrap}
+  .hero{padding:20px}
+  .panel-body{padding:20px 16px}
+  .choice-grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .info-strip{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  .container{width:min(100% - 18px,720px)}
+  .choice-grid,.choice-grid.three{grid-template-columns:1fr}
+  .stars label{font-size:36px}
+  .brand-copy h1{font-size:30px}
+  .logo{width:74px;height:74px}
+}
+</style>
+</head>
+<body>
+<main class="container">
+  <div class="topbar">
+    <div class="badge-top"><i></i> Atendimento & pós-venda</div>
+    <div class="badge-top">Experiência K&M Imports</div>
+  </div>
+
+  <section class="hero">
+    <div class="brand">
+      <div class="logo-wrap" aria-hidden="true">
+        <div class="logo-glow"></div>
+        <div class="logo">
+          <div class="logo-mark">
+            <b>K<span>&</span>M</b>
+            <small>IMPORTS</small>
+          </div>
+        </div>
+      </div>
+      <div class="brand-copy">
+        <small>Pesquisa de satisfação</small>
+        <h1>Sua opinião <span>faz a diferença</span>.</h1>
+        <p>Queremos deixar sua experiência cada vez melhor. Leva menos de 1 minuto e ajuda a K&M a evoluir no atendimento, agilidade e qualidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="meta-row">
+    <span>Preenchimento rápido</span>
+    <span id="progressLabel">0% concluído</span>
+  </div>
+  <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+
+  <section class="panel">
+    <div class="panel-body">
+      <div id="formArea">
+        <div class="panel-head">
+          <div class="panel-icon">★</div>
+          <div>
+            <h2>Avaliação da sua experiência</h2>
+            <p>Responda as perguntas abaixo e depois confirme o envio pelo WhatsApp.</p>
+          </div>
+        </div>
+
+        <form id="survey" novalidate>
+          <div class="field">
+            <label class="main" for="nome">👤 Nome do cliente</label>
+            <p class="hint">Use seu nome para identificarmos sua avaliação.</p>
+            <input class="input" id="nome" name="nome" type="text" placeholder="Digite seu nome" maxlength="100" required autocomplete="name">
+          </div>
+
+          <fieldset class="field">
+            <legend>⭐ Como você avalia nosso atendimento?</legend>
+            <p class="hint">Selecione a opção que melhor representa sua experiência.</p>
+            <div class="choice-grid">
+              <label class="choice"><input type="radio" name="atendimento" value="Excelente" required>Excelente</label>
+              <label class="choice"><input type="radio" name="atendimento" value="Bom">Bom</label>
+              <label class="choice"><input type="radio" name="atendimento" value="Regular">Regular</label>
+              <label class="choice"><input type="radio" name="atendimento" value="Ruim">Ruim</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>💬 Nosso atendimento atendeu às suas expectativas?</legend>
+            <p class="hint">Queremos entender se conseguimos atender você da forma certa.</p>
+            <div class="choice-grid three">
+              <label class="choice"><input type="radio" name="expectativas" value="Sim, totalmente" required>Sim, totalmente</label>
+              <label class="choice"><input type="radio" name="expectativas" value="Parcialmente">Parcialmente</label>
+              <label class="choice"><input type="radio" name="expectativas" value="Não">Não</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>📦 Como você avalia sua experiência conosco?</legend>
+            <p class="hint">Toque nas estrelas para dar sua nota geral.</p>
+            <div class="stars-wrap">
+              <div class="stars" aria-label="Avaliação de uma a cinco estrelas">
+                <input type="radio" id="star5" name="estrelas" value="5" required><label for="star5" title="5 estrelas">★</label>
+                <input type="radio" id="star4" name="estrelas" value="4"><label for="star4" title="4 estrelas">★</label>
+                <input type="radio" id="star3" name="estrelas" value="3"><label for="star3" title="3 estrelas">★</label>
+                <input type="radio" id="star2" name="estrelas" value="2"><label for="star2" title="2 estrelas">★</label>
+                <input type="radio" id="star1" name="estrelas" value="1"><label for="star1" title="1 estrela">★</label>
+              </div>
+              <div class="rating-text" id="ratingText">Selecione de 1 a 5 estrelas</div>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>💙 Você voltaria a comprar conosco?</legend>
+            <p class="hint">Sua resposta nos ajuda a medir a confiança na K&M.</p>
+            <div class="choice-grid three">
+              <label class="choice"><input type="radio" name="retorno" value="Sim" required>Sim</label>
+              <label class="choice"><input type="radio" name="retorno" value="Talvez">Talvez</label>
+              <label class="choice"><input type="radio" name="retorno" value="Não">Não</label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="main" for="sugestoes">📝 Sugestões ou observações (opcional)</label>
+            <p class="hint">Se quiser, conte o que podemos melhorar.</p>
+            <textarea id="sugestoes" name="sugestoes" placeholder="Escreva aqui sua sugestão..." maxlength="2000"></textarea>
+          </div>
+
+          <button class="submit" type="submit">Enviar avaliação 💙</button>
+          <p class="note"><strong>Importante:</strong> ao finalizar, será aberta uma mensagem no WhatsApp com suas respostas prontas. Basta tocar em <strong>Enviar</strong>.</p>
+        </form>
+
+        <div class="info-strip" aria-hidden="true">
+          <div class="info-box"><b>1 min</b><small>Resposta rápida</small></div>
+          <div class="info-box"><b>100%</b><small>Visual mobile</small></div>
+          <div class="info-box"><b>K&M</b><small>Atendimento premium</small></div>
+        </div>
+      </div>
+
+      <div class="thanks" id="thanks" role="status" aria-live="polite">
+        <div class="thanks-badge">✓</div>
+        <h2>Obrigado pela avaliação!</h2>
+        <p>Seu aplicativo de mensagens foi aberto com a avaliação preenchida. Se precisar, você pode abrir o WhatsApp novamente ou preencher uma nova resposta.</p>
+        <div class="actions">
+          <button class="submit" type="button" id="openWhatsAgain">Abrir WhatsApp novamente</button>
+          <button class="ghost-btn" type="button" id="again">Preencher novamente</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer">K&M IMPORTS • Sua satisfação é nossa prioridade.</p>
+</main>
+
+<script>
+const form = document.getElementById('survey');
+const progressBar = document.getElementById('progressBar');
+const progressLabel = document.getElementById('progressLabel');
+const ratingText = document.getElementById('ratingText');
+const thanks = document.getElementById('thanks');
+const formArea = document.getElementById('formArea');
+let lastWhatsappUrl = '';
+
+const ratings = {
+  1:'1 estrela • experiência ruim',
+  2:'2 estrelas • pode melhorar',
+  3:'3 estrelas • experiência regular',
+  4:'4 estrelas • muito boa',
+  5:'5 estrelas • excelente'
+};
+
+function filledCount(){
+  let n = 0;
+  if(form.nome.value.trim()) n++;
+  if(form.querySelector('input[name="atendimento"]:checked')) n++;
+  if(form.querySelector('input[name="expectativas"]:checked')) n++;
+  if(form.querySelector('input[name="estrelas"]:checked')) n++;
+  if(form.querySelector('input[name="retorno"]:checked')) n++;
+  return n;
+}
+
+function updateProgress(){
+  const pct = Math.round((filledCount()/5)*100);
+  progressBar.style.width = pct + '%';
+  progressLabel.textContent = pct + '% concluído';
+  const star = form.querySelector('input[name="estrelas"]:checked');
+  ratingText.textContent = star ? ratings[star.value] : 'Selecione de 1 a 5 estrelas';
+}
+
+form.addEventListener('input', updateProgress);
+form.addEventListener('change', updateProgress);
+updateProgress();
+
+function buildMessage(){
+  const d = new FormData(form);
+  return `💙 K&M IMPORTS | PESQUISA DE SATISFAÇÃO\n\n👤 Nome: ${d.get('nome')}\n⭐ Atendimento: ${d.get('atendimento')}\n💬 Expectativas: ${d.get('expectativas')}\n📦 Experiência: ${d.get('estrelas')}/5 estrelas\n💙 Voltaria a comprar: ${d.get('retorno')}\n📝 Sugestões: ${d.get('sugestoes') || 'Nenhuma'}`;
+}
+
+function openWhatsApp(){
+  if(!lastWhatsappUrl){
+    const msg = buildMessage();
+    lastWhatsappUrl = 'https://wa.me/5511997981891?text=' + encodeURIComponent(msg);
+  }
+  window.open(lastWhatsappUrl, '_blank', 'noopener,noreferrer');
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if(!form.reportValidity()) return;
+  lastWhatsappUrl = 'https://wa.me/5511997981891?text=' + encodeURIComponent(buildMessage());
+  openWhatsApp();
+  formArea.style.display = 'none';
+  thanks.style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+document.getElementById('again').addEventListener('click', () => {
+  form.reset();
+  lastWhatsappUrl = '';
+  formArea.style.display = 'block';
+  thanks.style.display = 'none';
+  updateProgress();
+});
+
+document.getElementById('openWhatsAgain').addEventListener('click', openWhatsApp);
+</script>
+</body>
+</html>
