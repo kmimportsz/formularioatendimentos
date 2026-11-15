@@ -224,7 +224,7 @@ textarea{min-height:110px;resize:vertical}
           </div>
         </div>
 
-        <form id="survey" novalidate>
+        <form id="survey">
           <div class="field">
             <label class="main" for="nome">👤 Nome do cliente</label>
             <p class="hint">Use seu nome para identificarmos sua avaliação.</p>
@@ -284,7 +284,7 @@ textarea{min-height:110px;resize:vertical}
           </div>
 
           <button class="submit" type="submit">Enviar avaliação 💙</button>
-          <p class="note"><strong>Importante:</strong> ao finalizar, será aberta uma mensagem no WhatsApp com suas respostas prontas. Basta tocar em <strong>Enviar</strong>.</p>
+          <p class="note" id="submissionNote">Sua avaliação será enviada diretamente à K&M Imports. Nenhuma conversa no WhatsApp será aberta.</p><div id="submitError" role="alert" aria-live="assertive" hidden style="margin-top:14px;padding:12px 14px;border:1px solid #8a3f53;border-radius:12px;background:#3a1520;color:#ffccd5;font-size:13px"></div>
         </form>
 
         <div class="info-strip" aria-hidden="true">
@@ -297,9 +297,8 @@ textarea{min-height:110px;resize:vertical}
       <div class="thanks" id="thanks" role="status" aria-live="polite">
         <div class="thanks-badge">✓</div>
         <h2>Obrigado pela avaliação!</h2>
-        <p>Seu aplicativo de mensagens foi aberto com a avaliação preenchida. Se precisar, você pode abrir o WhatsApp novamente ou preencher uma nova resposta.</p>
+        <p>Sua avaliação foi recebida pela K&M Imports. Obrigado por dedicar um momento para compartilhar sua experiência conosco!</p>
         <div class="actions">
-          <button class="submit" type="button" id="openWhatsAgain">Abrir WhatsApp novamente</button>
           <button class="ghost-btn" type="button" id="again">Preencher novamente</button>
         </div>
       </div>
@@ -316,7 +315,12 @@ const progressLabel = document.getElementById('progressLabel');
 const ratingText = document.getElementById('ratingText');
 const thanks = document.getElementById('thanks');
 const formArea = document.getElementById('formArea');
-let lastWhatsappUrl = '';
+// Mesma URL e chave pública já utilizadas no K&M DIRETORIA.
+// Nunca use uma service_role key em um formulário público.
+const SUPABASE_URL = 'https://xzcwmhrdfueutareqxjw.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_n8AAf2_a_dWqYf-ASGYV3A_vBrWfW6X';
+const submitButton = form.querySelector('button[type="submit"]');
+const submitError = document.getElementById('submitError');
 
 const ratings = {
   1:'1 estrela • experiência ruim',
@@ -348,38 +352,74 @@ form.addEventListener('input', updateProgress);
 form.addEventListener('change', updateProgress);
 updateProgress();
 
-function buildMessage(){
-  const d = new FormData(form);
-  return `💙 K&M IMPORTS | PESQUISA DE SATISFAÇÃO\n\n👤 Nome: ${d.get('nome')}\n⭐ Atendimento: ${d.get('atendimento')}\n💬 Expectativas: ${d.get('expectativas')}\n📦 Experiência: ${d.get('estrelas')}/5 estrelas\n💙 Voltaria a comprar: ${d.get('retorno')}\n📝 Sugestões: ${d.get('sugestoes') || 'Nenhuma'}`;
-}
-
-function openWhatsApp(){
-  if(!lastWhatsappUrl){
-    const msg = buildMessage();
-    lastWhatsappUrl = 'https://wa.me/5511997981891?text=' + encodeURIComponent(msg);
+async function sendReview(payload){
+  const response = await fetch(SUPABASE_URL + '/rest/v1/avaliacoes', {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_PUBLISHABLE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(payload),
+    cache: 'no-store'
+  });
+  if(!response.ok){
+    let detail = '';
+    try { detail = JSON.stringify(await response.json()); }
+    catch { detail = 'HTTP ' + response.status; }
+    throw new Error(detail);
   }
-  window.open(lastWhatsappUrl, '_blank', 'noopener,noreferrer');
 }
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
   if(!form.reportValidity()) return;
-  lastWhatsappUrl = 'https://wa.me/5511997981891?text=' + encodeURIComponent(buildMessage());
-  openWhatsApp();
-  formArea.style.display = 'none';
-  thanks.style.display = 'block';
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(submitButton.disabled) return;
+
+  const d = new FormData(form);
+  const review = {
+    nome_cliente: String(d.get('nome') || '').trim(),
+    atendimento: String(d.get('atendimento') || ''),
+    expectativas: String(d.get('expectativas') || ''),
+    estrelas: Number(d.get('estrelas')),
+    sugestoes: String(d.get('sugestoes') || '').trim()
+  };
+  // O K&M DIRETORIA já consulta as cinco colunas acima. Para preservar a resposta
+  // "voltaria a comprar" sem exigir uma alteração de tabela, ela é acrescentada
+  // ao campo de observações existente.
+  const retorno = String(d.get('retorno') || '');
+  review.sugestoes = ('Voltaria a comprar: ' + retorno + (review.sugestoes ? '\nObservações: ' + review.sugestoes : '')).slice(0,2000);
+
+  submitError.hidden = true;
+  submitError.textContent = '';
+  submitButton.disabled = true;
+  submitButton.textContent = 'Enviando avaliação...';
+
+  try {
+    await sendReview(review);
+    formArea.style.display = 'none';
+    thanks.style.display = 'block';
+    progressBar.style.width = '100%';
+    progressLabel.textContent = 'Avaliação enviada';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } catch(err) {
+    console.error('Erro no envio da avaliação:', err);
+    submitError.textContent = 'Não foi possível enviar sua avaliação agora. Confira a conexão e tente novamente. Se o problema continuar, avise a K&M Imports.';
+    submitError.hidden = false;
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Enviar avaliação 💙';
+  }
 });
 
 document.getElementById('again').addEventListener('click', () => {
   form.reset();
-  lastWhatsappUrl = '';
   formArea.style.display = 'block';
   thanks.style.display = 'none';
   updateProgress();
 });
 
-document.getElementById('openWhatsAgain').addEventListener('click', openWhatsApp);
+
 </script>
 </body>
 </html>
