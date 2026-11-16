@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#040507">
 <meta name="description" content="Pesquisa de satisfação da K&M Imports.">
-<title>K&M Imports | Avaliação Premium</title>
+<title>K&M Imports | Sua experiência importa</title>
 <style>
 :root{
   color-scheme:dark;
@@ -180,8 +180,10 @@ textarea{min-height:110px;resize:vertical}
   .logo{width:74px;height:74px}
 }
 </style>
+<link rel="stylesheet" href="experience.css">
 </head>
 <body>
+<a class="km-skip" href="#survey">Pular para o conteúdo</a>
 <main class="container">
   <div class="topbar">
     <div class="badge-top"><i></i> Atendimento & pós-venda</div>
@@ -201,14 +203,14 @@ textarea{min-height:110px;resize:vertical}
       </div>
       <div class="brand-copy">
         <small>Pesquisa de satisfação</small>
-        <h1>Sua opinião <span>faz a diferença</span>.</h1>
-        <p>Queremos deixar sua experiência cada vez melhor. Leva menos de 1 minuto e ajuda a K&M a evoluir no atendimento, agilidade e qualidade.</p>
+        <h1>A gente cuida.<br><span>Você conta.</span></h1>
+        <p>Como foi estar com a K&M? Seu elogio, sua ideia e o que poderia ter sido melhor ajudam a cuidar ainda mais de cada atendimento.</p>
       </div>
     </div>
   </section>
 
   <div class="meta-row">
-    <span>Preenchimento rápido</span>
+    <span>Um momento para ouvir você</span>
     <span id="progressLabel">0% concluído</span>
   </div>
   <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
@@ -220,7 +222,7 @@ textarea{min-height:110px;resize:vertical}
           <div class="panel-icon">★</div>
           <div>
             <h2>Avaliação da sua experiência</h2>
-            <p>Responda as perguntas abaixo e depois confirme o envio pelo WhatsApp.</p>
+            <p>Responda no seu tempo. Ao enviar, sua avaliação chega diretamente à nossa equipe.</p>
           </div>
         </div>
 
@@ -306,7 +308,7 @@ textarea{min-height:110px;resize:vertical}
   </section>
 
   <p class="footer">K&M IMPORTS • Sua satisfação é nossa prioridade.</p>
-</main>
+<aside class="km-care" aria-label="Atendimento K&M"><div><strong>Seu atendimento merece cuidado. 💙</strong><p>Ficou com alguma dúvida? Conte com a gente para ajudar em cada detalhe.</p></div><a href="https://wa.me/5511997981891?text=Ol%C3%A1%2C%20K%26M!%20Preciso%20de%20ajuda%20com%20meu%20atendimento." target="_blank" rel="noopener noreferrer">Conversar com a K&amp;M ↗</a></aside><nav class="km-links" aria-label="Serviços ao cliente"><a href="https://kmimportsz.github.io/formularioatendimento/">Meu pedido</a><a href="https://kmimportsz.github.io/formularioavaliacao/">Avaliar experiência</a></nav></main>
 
 <script>
 const form = document.getElementById('survey');
@@ -332,7 +334,7 @@ const ratings = {
 
 function filledCount(){
   let n = 0;
-  if(form.nome.value.trim()) n++;
+  if(form.elements.namedItem('nome').value.trim()) n++;
   if(form.querySelector('input[name="atendimento"]:checked')) n++;
   if(form.querySelector('input[name="expectativas"]:checked')) n++;
   if(form.querySelector('input[name="estrelas"]:checked')) n++;
